@@ -1,27 +1,35 @@
 import golly as g
 import hashlib
+import itertools
 
-infnames = """09x11-p2.txt
-09x11-stable.txt
-09x11-vanish.txt
-10x10-p2.txt
-10x10-stable.txt
-10x10-vanish.txt
-11x11-p2.txt
-11x11-stable.txt
-11x11-vanish.txt
-to6x11-p2.txt
-to6x11-stable.txt
-to6x11-vanish.txt
-to7x11-p2.txt
-to7x11-stable.txt
-to7x11-vanish.txt
-to8x11-p2.txt
-to8x11-stable.txt
-to8x11-vanish.txt
-to9x11-p2.txt
-to9x11-stable.txt
-to9x11-vanish.txt"""
+sourcepath, targetpath = "C:/path/to/3obj/new/", "C:/path/to/3obj/hashes/"
+infnames = """new-09x11-p2-part1.txt
+new-09x11-p2-part2.txt
+new-09x11-stable-part1.txt
+new-09x11-stable-part2.txt
+new-09x11-vanish.txt
+new-10x10-p2.txt
+new-10x10-stable.txt
+new-10x10-vanish.txt
+new-11x11-p2-part1.txt
+new-11x11-p2-part2.txt
+new-11x11-stable-part1.txt
+new-11x11-stable-part2.txt
+new-11x11-vanish.txt
+new-to6x11-p2.txt
+new-to6x11-stable.txt
+new-to6x11-vanish.txt
+new-to7x11-p2.txt
+new-to7x11-stable.txt
+new-to7x11-vanish.txt
+new-to8x11-p2.txt
+new-to8x11-stable.txt
+new-to8x11-vanish.txt
+new-to9x11-p2-part1.txt
+new-to9x11-p2-part2.txt
+new-to9x11-stable-part1.txt
+new-to9x11-stable-part2.txt
+new-to9x11-vanish.txt"""
 infnamelist = infnames.split("\n")
 
 chardict = {}
@@ -51,28 +59,44 @@ def chunks(l, n):
         yield l[i:i+n]
 
 def getocto3(clist):
+  # The original implementation used paste operations into a Golly universe.
+  # The first attempt to switch to sorting outside of Golly contained a bug, so hashes weren't orientation-independent.
+  # All fixed now!
   testpats = []
   if clist == []:
     minstr="[]"
   else:
-    for orientation in [[1,0,0,1],[0,-1,1,0],[-1,0,0,-1],[0,1,-1,0],[-1,0,0,1],[1,0,0,-1],[0,1,1,0],[0,-1,-1,0]]:
+    testpat_chunks = list(chunks(clist, 2))  # start with the un-transformed pattern, look for something lexicographically smaller
+    testpat_chunks.sort(key=lambda l:(l[1], l[0]))
+    firstx, firsty = testpat_chunks[0][0],testpat_chunks[0][1]
+    minstr = str([[coord[0]-firstx,coord[1]-firsty] for coord in testpat_chunks])
+    for orientation in [[0,-1,1,0],[-1,0,0,-1],[0,1,-1,0],[-1,0,0,1],[1,0,0,-1],[0,1,1,0],[0,-1,-1,0]]:
       # calling g.evolve() slows down processing a lot, but without this step, coordinates aren't sorted into canonical order
-      # testpat = g.evolve(g.transform(clist,0,0,orientation[0],orientation[1],orientation[2],orientation[3]),0)
-      testpat_chunks = list(chunks(clist, 2))
+      testpat = g.transform(clist,0,0,orientation[0],orientation[1],orientation[2],orientation[3])
+      testpat_chunks = list(chunks(testpat, 2))
       testpat_chunks.sort(key=lambda l:(l[1], l[0]))
-      mcc = min(testpat_chunks)  # notice this is the first ON cell in this orientation of pattern, NOT the upper left corner of the pattern's bounding box! ####
-      sortedpatlist = [[x[0]-mcc[0],x[1]-mcc[1]] for x in testpat_chunks]
-      testpats.append(sortedpatlist)
-    minstr = min([str(pat) for pat in testpats])
+      # g.note("Before canonicalization: " + str(testpat_chunks))  ###############
+      # notice this is the first ON cell in this orientation of pattern, NOT the upper left corner of the pattern's bounding box! ####
+      firstx, firsty = testpat_chunks[0][0],testpat_chunks[0][1]
+      sortedpatstr = str([[coord[0]-firstx,coord[1]-firsty] for coord in testpat_chunks])
+      # g.note(sortedpatstr)
+      if sortedpatstr<minstr: minstr = sortedpatstr
   return get9char(minstr)
 
 g.setalgo("HashLife")
 g.setrule("B3/S23")
-count = 0
-for i in range(len(infnames)):
-  with open("C:/Users/greedd/Desktop/3obj/final/" + infnamelist[i],"r") as f:
-    with open("C:/Users/greedd/Desktop/3obj/hashes/" + infnamelist[i].replace(".txt","-hashes.txt"),"w") as f2:
+# s = getocto3(g.parse("3o$o$bo!"))+"\n"+getocto3(g.parse("3o$2bo$bo!"))+"\n"+ \
+#     getocto3(g.parse("bo$o$3o!"))+"\n"+getocto3(g.parse("bo$2bo$3o!"))+"\n"+ \
+#     getocto3(g.parse("o$obo$2o!"))+"\n"+getocto3(g.parse("2bo$obo$b2o!"))+"\n"+ \
+#     getocto3(g.parse("b2o$obo$2bo!"))+"\n"+getocto3(g.parse("2o$obo$o!"))+"\n"
+# g.note(s)
+# g.exit()
+
+for i in range(len(infnames[:1])):
+  with open(sourcepath + infnamelist[i],"r") as f:
+    with open(targetpath + infnamelist[i].replace(".txt","-hashes.txt"),"w") as f2:
       all = f.readlines()
+      count = len(all)
       for item in all:
         s = item[:-4]+"! "
         pat = g.parse(s)
@@ -86,5 +110,5 @@ for i in range(len(infnames)):
         if count %10 == 0:
           g.show(infnamelist[i] + ":  Total count=" + str(count))
           f.flush()
-        count+=1
+        count-=1
         f2.write(s+"\n")
