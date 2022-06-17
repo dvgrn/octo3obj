@@ -21,21 +21,21 @@ defaultfolder = os.path.abspath(os.path.dirname(sys.argv[0]))
 # Change the next line to a hard-coded path if you don't want to have to
 #   choose the constellations.txt file every time you run the script
 
-constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11B-11x11reduced.txt"
+constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11B-11x11reduced.txt"
 
-output_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-stable.txt"
-output2_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-p2.txt"
-output3_vanish_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-vanish.txt"
-output4_unusual_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-long.txt"
+output_fname = "C:/path/to/3obj/11x11B-collisions-for-11x11-3obj-1G-stable.txt"
+output2_fname = "C:/path/to/3obj/11x11B-collisions-for-11x11-3obj-1G-p2.txt"
+output3_vanish_fname = "C:/path/to/3obj/11x11B-collisions-for-11x11-3obj-1G-vanish.txt"
+output4_unusual_fname = "C:/path/to/3obj/11x11B-collisions-for-11x11-3obj-1G-long.txt"
 
 # Ran the following one at a time to verify results.  TODO: refactor to work from a list of filenames
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-06x11reduced.txt"
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-07x11reduced.txt"
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-08x11reduced.txt"
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-09x11reduced.txt"
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-09x11reduced.txt"
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-10x10reduced.txt"
-# constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11A-11x11reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11-to-06x11reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11-to-07x11reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11-to-08x11reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11-to-09x11reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11-09x11reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11-10x10reduced.txt"
+# constellation_fname = "C:/path/to/3obj/11x11groups/3obj-11x11A-11x11reduced.txt"
 
 # Python function to convert a cell list to RLE
 # Author: Nathaniel Johnston (nathaniel@nathanieljohnston.com), June 2009.
