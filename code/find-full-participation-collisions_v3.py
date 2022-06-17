@@ -1,4 +1,4 @@
-# find-full-participation-collisions-v2.py
+# find-full-participation-collisions-v3.py
 #   v1: first working version, very slow
 #   v2: deal with smaller chunks of constellations, remove most duplicates, check for the rest
 #   v3: move LONG_ENOUGH back up to 65536, skip stabilizations with populations repeating after 60 not just after 12
@@ -13,8 +13,6 @@ LONG_ENOUGH = 65536
 
 g.setrule("B3/S23")
 
-dupedict={}
-
 # the next three lines are just a standard Python trick to figure out where the script is saved
 import os
 import sys
@@ -23,6 +21,14 @@ defaultfolder = os.path.abspath(os.path.dirname(sys.argv[0]))
 # Change the next line to a hard-coded path if you don't want to have to
 #   choose the constellations.txt file every time you run the script
 
+constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11B-11x11reduced.txt"
+
+output_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-stable.txt"
+output2_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-p2.txt"
+output3_vanish_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-vanish.txt"
+output4_unusual_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-long.txt"
+
+# Ran the following one at a time to verify results.  TODO: refactor to work from a list of filenames
 # constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-06x11reduced.txt"
 # constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-07x11reduced.txt"
 # constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-to-08x11reduced.txt"
@@ -30,12 +36,7 @@ defaultfolder = os.path.abspath(os.path.dirname(sys.argv[0]))
 # constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-09x11reduced.txt"
 # constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11-10x10reduced.txt"
 # constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11A-11x11reduced.txt"
-constellation_fname = "C:/Users/greedd/Desktop/3obj/11x11groups/3obj-11x11B-11x11reduced.txt"
 
-output_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-stable.txt"
-output2_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-p2.txt"
-output3_vanish_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-vanish.txt"
-output4_unusual_fname = "C:/Users/greedd/Desktop/3obj/11x11B-collisions-for-11x11-3obj-1G-long.txt"
 # Python function to convert a cell list to RLE
 # Author: Nathaniel Johnston (nathaniel@nathanieljohnston.com), June 2009.
 #           DMG: Refactored slightly so that the function input is a simple cell list.
@@ -219,29 +220,6 @@ for rlestr in rledata:
                rle = giveRLEfrommultistate(canonpat).replace("\n","")
                out4f.write(rle + "1000$\n")
             # g.note("Found something with a population period that isn't a factor of 60...")
-          
-        # TODO: replace the test in this next if statement with the tests from the pseudocode for clean OTTs and splitters
-        # g.run(4096)
-        # remainder = g.getcells([-120,-120,256,256])
-        # if len(remainder) == 0:
-        #   pop = int(g.getpop())
-        #   if pop !=0:
-        #     justgliders=1
-        #     if pop % 5 == 0:
-        #       for test in range(8):
-        #         g.run(1)
-        #         pop = int(g.getpop())
-        #         if pop % 5 != 0:
-        #           justgliders = 0
-        #       # population only remains a multiple of 10 for 3 ticks at most if it's not a glider
-        #     else:
-        #       justgliders = 0
-        #     if justgliders == 0:
-        #       # These next three lines write a pattern to the chosen output file,
-        #       #   so they should only be executed if a pattern passes the test
-        #       with open(output_fname, "a") as outf:
-        #         outf.write(rle + "$$$$$$$$$$$$$$$$$$$$$$$$$\n")
-        #         match += 1
 
 # just for the record, make the output file into valid RLE
 outf.write("!")
@@ -253,12 +231,4 @@ out2f.close()
 out3f.close()
 out4f.close()
 # g.open(output_fname)
-g.show(str(count))
-# 1208940 for to-7x11 run
-# 1280894 for to-8x11 run (weirdly)
-# 2342127 for to-9x11 run
-# 2033144 for 9x11 run
-# 2145288 for 10x10 run (66076)
-# 2275515 for 11x11A run (73333)
-# 2633577 for 11x11B run (73000) -- have to combine before removing dupes
-
+g.show("Count: " + str(count))
