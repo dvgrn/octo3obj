@@ -92,7 +92,7 @@ g.setrule("B3/S23")
 # g.note(s)
 # g.exit()
 
-for i in range(len(infnames[:1])):
+for i in range(len(infnames)):
   with open(sourcepath + infnamelist[i],"r") as f:
     with open(targetpath + infnamelist[i].replace(".txt","-hashes.txt"),"w") as f2:
       all = f.readlines()
