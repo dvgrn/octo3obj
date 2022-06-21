@@ -1,23 +1,18 @@
 # find-by-octo3.py
 # Dave Greene, 17 June 2022 (Golly Python3)
-
 import golly as g
 import hashlib
 
-searchfiles = "new-09x11-vanish-hashes.txt"
+searchfiles = "new-to6x11-vanish-hashes.txt,new-to7x11-vanish-hashes.txt,new-to8x11-vanish-hashes.txt,new-to9x11-vanish-hashes.txt," + \
+              "new-09x11-vanish-hashes.txt,new-10x10-vanish-hashes.txt,new-11x11-vanish-hashes.txt," + \
+              "new-to6x11-stable-hashes.txt,new-to6x11-p2-hashes.txt,new-to8x11-stable-hashes.txt,new-11x11-p2-part1-hashes.txt,new-11x11-p2-part2-hashes.txt," + \
+              "new-to9x11-stable-part1-hashes.txt,new-to9x11-stable-part2-hashes.txt," + \
+              "new-to8x11-p2-hashes.txt,new-09x11-stable-part1-hashes.txt,new-09x11-stable-part2-hashes.txt,new-10x10-p2-hashes.txt,new-10x10-stable-hashes.txt," + \
+              "new-to9x11-p2-part1-hashes.txt,new-to9x11-p2-part2-hashes.txt,new-11x11-stable-part1-hashes.txt,new-11x11-stable-part2-hashes.txt"
 searchlist = searchfiles.split(",")
 basepath = "C:/path/to/3obj/hashes/"
 
-NUMLINES = 4652759
-# diehard TL+block, in 11x11-vanish-hashes
-# 6bo$5b3o$2o2bobobo$2ob3ob3o$4bobobo$5b3o$6bo!
-# this p2 object
-# 2ob2o$2ob2o$8b2o$7bo2bo$8b2o2$2bo7b2o$2bo7bobo$2bo7bo!
-# turns into this p2 object:
-# 12b2o$12b2o17bo$21bo8bobo$20bobo6bo2bo$21b2o7b2o$12b2o$11bobo$12bo19b2o$31bo2bo$32b2o3$13b2o$13b2o3$6bo9b3o$5bobo27b2o$5bobo27b2o$6bo2$b2o7b2o15b2o$o2bo5bo2bo14b2o30bo$b2o7b2o47bo$54b2o3bo$6bo46bo2bo$5bobo46b2o$5bobo24b3o$6bo$11b3o16bo5bo$30bo5bo$30bo5bo2$33b2o$19bo12bo2bo$18bobo12b2o$18bobo$19bo2$14b2o$13bo2bo$14b2o2$19bo13b3o$18bobo$18bobo$19bo!
-# this dying spark
-# 5b2o$3b5o$ob4obo$3o3b3o$3b2ob3o$6o$ob4o2bo$5bo2bo$5b2o!
-# shows up only once in the database (so far).
+NUMLINES = 2637764
 
 chardict = {}
 for i in range(37, 127):
