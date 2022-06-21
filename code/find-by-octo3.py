@@ -8,11 +8,12 @@ searchfiles = "new-to6x11-vanish-hashes.txt,new-to7x11-vanish-hashes.txt,new-to8
               "new-to6x11-stable-hashes.txt,new-to6x11-p2-hashes.txt,new-to8x11-stable-hashes.txt,new-11x11-p2-part1-hashes.txt,new-11x11-p2-part2-hashes.txt," + \
               "new-to9x11-stable-part1-hashes.txt,new-to9x11-stable-part2-hashes.txt," + \
               "new-to8x11-p2-hashes.txt,new-09x11-stable-part1-hashes.txt,new-09x11-stable-part2-hashes.txt,new-10x10-p2-hashes.txt,new-10x10-stable-hashes.txt," + \
-              "new-to9x11-p2-part1-hashes.txt,new-to9x11-p2-part2-hashes.txt,new-11x11-stable-part1-hashes.txt,new-11x11-stable-part2-hashes.txt"
+              "new-to9x11-p2-part1-hashes.txt,new-to9x11-p2-part2-hashes.txt,new-11x11-stable-part1-hashes.txt,new-11x11-stable-part2-hashes.txt," + \
+              "new-to7x11-stable-hashes.txt,new-to7x11-p2-hashes.txt,new-09x11-p2-part1-hashes.txt,new-09x11-p2-part2-hashes.txt"
 searchlist = searchfiles.split(",")
 basepath = "C:/path/to/3obj/hashes/"
 
-NUMLINES = 2637764
+NUMLINES = 2637764 # TODO: get the new number, update
 
 chardict = {}
 for i in range(37, 127):
