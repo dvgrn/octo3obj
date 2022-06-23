@@ -36,7 +36,7 @@ def get9char(inputstr):
   h.update(inputstr.encode())
   i = 0  # convert first seven bytes of SHA1 digest to an integer
   for char in h.digest()[:7]:
-    i = i*256 + char
+    i = i*256 + ord(char)
   s = ""
   while len(s)<9:
     d = i//90
