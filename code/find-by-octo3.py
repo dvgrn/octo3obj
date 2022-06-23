@@ -1,7 +1,13 @@
 # find-by-octo3.py
 # Dave Greene, 17 June 2022 (Golly Python3)
+######## Download hash files from https://drive.google.com/drive/folders/1_u-pTwgyldz5yKw89PUBh89OPIksLrTU?usp=sharing
+######## Then update line 10 below with your chosen location for the downloaded files
+
 import golly as g
 import hashlib
+
+
+basepath = "C:/path/to/3obj/hashes/"  ###### UPDATE THIS TO MATCH YOUR DOWNLOAD LOCATION
 
 searchfiles = "new-to6x11-vanish-hashes.txt,new-to7x11-vanish-hashes.txt,new-to8x11-vanish-hashes.txt,new-to9x11-vanish-hashes.txt," + \
               "new-09x11-vanish-hashes.txt,new-10x10-vanish-hashes.txt,new-11x11-vanish-hashes.txt," + \
@@ -9,11 +15,10 @@ searchfiles = "new-to6x11-vanish-hashes.txt,new-to7x11-vanish-hashes.txt,new-to8
               "new-to9x11-stable-part1-hashes.txt,new-to9x11-stable-part2-hashes.txt," + \
               "new-to8x11-p2-hashes.txt,new-09x11-stable-part1-hashes.txt,new-09x11-stable-part2-hashes.txt,new-10x10-p2-hashes.txt,new-10x10-stable-hashes.txt," + \
               "new-to9x11-p2-part1-hashes.txt,new-to9x11-p2-part2-hashes.txt,new-11x11-stable-part1-hashes.txt,new-11x11-stable-part2-hashes.txt," + \
-              "new-to7x11-stable-hashes.txt,new-to7x11-p2-hashes.txt,new-09x11-p2-part1-hashes.txt,new-09x11-p2-part2-hashes.txt"
+              "new-to7x11-stable-hashes.txt,new-to7x11-p2-part1-hashes.txt,new-to7x11-p2-part2-hashes.txt,new-09x11-p2-part1-hashes.txt,new-09x11-p2-part2-hashes.txt"
 searchlist = searchfiles.split(",")
-basepath = "C:/path/to/3obj/hashes/"
 
-NUMLINES = 2637764 # TODO: get the new number, update
+NUMLINES = 3421907
 
 chardict = {}
 for i in range(37, 127):
@@ -69,12 +74,16 @@ def getocto3(clist):
 g.setalgo("HashLife")
 g.setrule("B3/S23")
 
-g.fitsel()
+try:
+  g.fitsel()
+except:
+  pass
 r = g.getselrect()
 if r==[]:
   r = g.getrect()
   if r==[0]:
     g.exit("No pattern found to search for.")
+  g.select(r)
 
 count = NUMLINES
 outptr = 0
@@ -84,6 +93,8 @@ g.addlayer()  # do tests in a new layer, then put results there
 hash = getocto3(pat)
 g.new("Output")
 g.putcells(pat,-pat[0]-128,-pat[1])
+g.fit()
+g.update()
 
 for fingerprintfile in searchlist:
   with open(basepath+fingerprintfile, "r") as f:
