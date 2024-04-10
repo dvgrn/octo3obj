@@ -1,0 +1,27 @@
+@RULE Interaction-prep
+
+Helper rule to convert state 1 cells to state 3 cells.
+
+@TABLE
+
+n_states:4
+neighborhood:vonNeumann
+symmetries:permute
+
+var a = {0,1,2,3}
+var b = {a}
+var c = {a}
+var d = {a}
+
+1,a,b,c,d,3
+
+@TREE
+
+num_states=4
+num_neighbors=4
+num_nodes=5
+1 0 3 2 3
+2 0 0 0 0
+3 1 1 1 1
+4 2 2 2 2
+5 3 3 3 3
